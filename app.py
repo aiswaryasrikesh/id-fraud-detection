@@ -6,10 +6,9 @@ import pytesseract
 from PIL import Image, ImageChops
 import json
 
-# --- Configure Tesseract (Windows users) ---
+
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-# --- Functions ---
 def load_image(file_bytes):
     img = cv2.imdecode(np.frombuffer(file_bytes, np.uint8), cv2.IMREAD_COLOR)
     return img
@@ -69,7 +68,7 @@ def generate_report(image_results, text_results, ela_flag=False):
         }
     }
 
-# --- Streamlit UI ---
+
 st.title("ID Document Fraud Detection Prototype")
 
 uploaded_file = st.file_uploader("Upload an ID image", type=["jpg", "jpeg", "png"])
@@ -79,33 +78,33 @@ if uploaded_file is not None:
 
     st.image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), caption="Uploaded ID", use_column_width=True)
 
-    # Run analysis
+    
     image_results = analyze_image(img)
     text_output = extract_text(img)
     text_results = analyze_text(text_output)
 
-    # Show extracted text
+    
     st.subheader("Extracted Text")
     st.text(text_output)
 
-    # Perform ELA
+    
     ela_result = perform_ela(uploaded_file)
     st.subheader("ELA Visualization")
     st.image(ela_result, caption="Error Level Analysis", use_column_width=True)
 
-    # For now, set ELA flag manually (True if anomalies visible)
     ela_flag = True
 
-    # Generate report
+    
     report = generate_report(image_results, text_results, ela_flag)
 
     st.subheader("Forgery Risk Report")
     st.json(report)
 
-    # Option to download JSON
+    
     st.download_button(
         label="Download Report as JSON",
         data=json.dumps(report, indent=4),
         file_name="fraud_report.json",
         mime="application/json"
+
     )
