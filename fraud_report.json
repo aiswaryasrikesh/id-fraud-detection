@@ -1,0 +1,23 @@
+{
+    "Forgery Risk Report": {
+        "Image Analysis": {
+            "resolution": "461x360",
+            "low_resolution_flag": true,
+            "edge_density": 10.944595083152567,
+            "suspicious_edges_flag": true,
+            "color_stddev": [
+                41.75704680212879,
+                56.45050605600119,
+                69.2738496049912
+            ],
+            "color_inconsistency_flag": true
+        },
+        "Text Analysis": {
+            "text_length": 78,
+            "contains_id_number": true,
+            "suspicious_text_flag": false
+        },
+        "ELA Flag": true,
+        "Overall Risk": "Suspicious"
+    }
+}
